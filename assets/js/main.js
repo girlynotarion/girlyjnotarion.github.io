@@ -1,7 +1,6 @@
 (function() {
   "use strict";
 
-
   /**
    * Mobile nav toggle
    */
@@ -23,7 +22,6 @@
         mobileNavToogle();
       }
     });
-
   });
 
   /**
@@ -157,7 +155,6 @@
         }
       }, false);
     });
-
   });
 
   /**
@@ -218,5 +215,45 @@
   }
   window.addEventListener('load', navmenuScrollspy);
   document.addEventListener('scroll', navmenuScrollspy);
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const timelineItems = document.querySelectorAll(".timeline-item");
+  
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+          observer.unobserve(entry.target); // Unobserve once it's animated
+        }
+      });
+    }, { threshold: 0.5 });
+  
+    timelineItems.forEach(item => {
+      observer.observe(item);
+    });
+  });
+  
+
+  /**
+ * Portfolio filter functionality
+ */
+const filterItems = document.querySelectorAll('#portfolio-filter li');
+const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+filterItems.forEach(filterItem => {
+  filterItem.addEventListener('click', () => {
+    // Remove active class from all filters and add to the selected one
+    filterItems.forEach(item => item.classList.remove('active'));
+    filterItem.classList.add('active');
+
+    // Get the filter value
+    const filterValue = filterItem.getAttribute('data-filter');
+
+    // Show/hide portfolio items based on the filter
+    portfolioItems.forEach(item => {
+      item.style.display = (filterValue === '*' || item.classList.contains(filterValue.substring(1))) ? 'block' : 'none';
+    });
+  });
+});
 
 })();

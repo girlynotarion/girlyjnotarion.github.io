@@ -264,7 +264,7 @@ h6 {
   }
 
   .navmenu {
-    padding: 0;
+    padding: 10px;
     z-index: 9997;
   }
 
@@ -272,7 +272,9 @@ h6 {
     display: none;
     list-style: none;
     position: absolute;
-    inset: 60px 20px 20px 20px;
+    align-items: center;
+    inset: 50px;
+    height: 350px;
     padding: 10px 0;
     margin: 0;
     border-radius: 6px;
@@ -377,6 +379,13 @@ h6 {
     display: block;
   }
 }
+
+@media screen and (max-width: 500px) {
+  body {
+    width: fit-content;
+  }
+}
+
 
 /*--------------------------------------------------------------
 # Preloader
@@ -879,8 +888,8 @@ border-color: transparent #dddddd transparent transparent;
 }
 
 .cloud-coding {
-  width: 350px;
-  height: 350px;
+  width: 400px;
+  height: 400px;
 }
 
 .proj-experience p {
@@ -908,6 +917,49 @@ border-color: transparent #dddddd transparent transparent;
   transform: translateY(-10px); /* Moves the container up slightly when hovered */
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); /* Increases the shadow on hover for a stronger floating effect */
 }
+
+
+.timeline-item {
+  opacity: 0;
+  transform: translateY(20px); /* Initially move elements slightly down */
+  transition: all 0.5s ease-out;
+}
+
+.timeline-item.show {
+  opacity: 1;
+  transform: translateY(0); /* Move to original position */
+}
+
+.timeline-item.left.show {
+  animation: slideInLeft 0.8s forwards;
+}
+
+.timeline-item.right.show {
+  animation: slideInRight 0.8s forwards;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 
 
 /*--------------------------------------------------------------
@@ -965,44 +1017,113 @@ border-color: transparent #dddddd transparent transparent;
 /*--------------------------------------------------------------
 # Portfolio Section
 --------------------------------------------------------------*/
+.portfolio-card:hover {
+  transform: translateY(-10px); /* Adjust the value for more or less float effect */
+}
 
-.portfolio .portfolio-filters {
-  padding: 0;
-  margin: 0 auto 20px auto;
-  list-style: none;
+.portfolio-card-img {
+  max-width: 400px; 
+  max-height: 800px; 
+  width: auto; 
+  height: auto; 
+}
+
+.portfolio-card .portfolio-card-img {
+  width: 400px;
+  height: 800px;
+  margin-top: 15px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.portfolio-card .portfolio-card-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
   text-align: center;
+  visibility: hidden;
+  opacity: 0;
+  background-image: -webkit-linear-gradient(bottom, #81917c 0%, rgba(225, 223, 237, 0.7) 99%, rgba(225, 223, 237, 0.8) 100%);
+  background-image: linear-gradient(to top, #81917c 0%, rgba(225, 223, 237, 0.7) 99%, rgba(225, 223, 237, 0.8) 100%);
+  -webkit-transition: all, 0.3s;
+  transition: all, 0.3s;
+  width: 300px;
+  height: 700px;
+  overflow: hidden;
 }
 
-.portfolio .portfolio-filters li {
-  cursor: pointer;
-  display: inline-block;
-  padding: 0;
-  font-size: 16px;
-  font-weight: 600;
-  margin: 0 10px;
-  line-height: 1;
-  text-transform: uppercase;
-  margin-bottom: 5px;
-  transition: all 0.3s ease-in-out;
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-card .portfolio-card-overlay {
+    -webkit-transition: none;
+    transition: none;
+  }
 }
 
-.portfolio .portfolio-filters li:hover,
-.portfolio .portfolio-filters li.filter-active {
-  color: var(--accent-color);
+.portfolio-card .portfolio-card-overlay .portfolio-card-caption {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+  width: 100%;
+  height: 800px;
+  color: #2b4e1c;
+  margin-top: 250px;
 }
 
-.portfolio .portfolio-filters li:first-child {
-  margin-left: 0;
+.portfolio-card:hover .portfolio-card-overlay {
+  opacity: 1;
+  visibility: visible;
+  width: 400px;
+  height: 100%;
+  border-radius: 0;
+  margin-left: 8px;
 }
 
-.portfolio .portfolio-filters li:last-child {
-  margin-right: 0;
+/* Example styles for iPads in portrait mode */
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .portfolio {
+    padding: 20px; /* Add padding for iPads */
+  }
+
+  .portfolio-card {
+    flex-direction: column; /* Stack items vertically */
+  }
+
+  .portfolio-card-img {
+    max-width: 100%; /* Make images take the full width */
+    height: auto; /* Maintain aspect ratio */
+  }
+
+  .cloud-coding {
+    padding-right: 100px;
+  }
 }
 
-.portfolio-img {
-  border-radius: 10px;
-  
+/* Example styles for iPads in landscape mode */
+@media only screen and (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+  .portfolio {
+    padding: 30px; /* Increase padding for landscape mode */
+  }
+
+  .portfolio-card {
+    flex-direction: row; /* Align items horizontally */
+  }
+
+  .portfolio-card-img {
+    max-width: 50%; /* Restrict image width */
+    height: auto; /* Maintain aspect ratio */
+  }
 }
+
+
 
 /*--------------------------------------------------------------
 # Contact Section
